@@ -1,0 +1,106 @@
+This file contains the details on how to runt this application
+# Required software
+- Python 3.8+
+- Node.js 16+ 
+- MongoDB Community Edition
+- Git
+
+# MongoDB Local Setup on Windows
+
+## 1. Download MongoDB Server
+
+* Go to: [https://www.mongodb.com/try/download/community](https://www.mongodb.com/try/download/community)
+* Choose Windows → MSI Installer → Latest version → Download.
+
+## 2. Install MongoDB Server
+
+1. Run the MSI installer.
+2. Choose Complete Installation.
+3. On Service Configuration, leave defaults (install as Windows Service, start automatically).
+4. Finish installation.
+
+> Default installation path: C:\Program Files\MongoDB\Server\<version>\\
+
+## 3. Add MongoDB to PATH
+
+1. Press Win + S, search "Environment Variables", open "Edit the system environment variables".
+2. Go to System Variables → Path → Edit → New.
+3. Add: C:\Program Files\MongoDB\Server\<version>\bin
+4. Click OK on all dialogs.
+
+## 4. Verify Installation
+
+Open a new Command Prompt and run:
+
+```cmd
+mongod --version
+mongosh --version
+```
+
+## 5. Install MongoDB Shell (mongosh)
+
+* Download ZIP from: [https://www.mongodb.com/try/download/shell](https://www.mongodb.com/try/download/shell)
+* Extract it to, e.g., C:\mongodb-shell
+* Add this folder to PATH: C:\mongodb-shell
+* Verify:
+
+```cmd
+mongosh --version
+```
+
+## 6. Connect to MongoDB using Shell
+
+Open a new terminal:
+
+```cmd
+mongosh
+use taskflow_manager
+```
+
+## Optional: MongoDB Compass
+
+* Download: [https://www.mongodb.com/try/download/compass](https://www.mongodb.com/try/download/compass)
+* Connect to mongodb://localhost:27017 to browse databases visually.
+
+---
+
+✅ Tip: Once PATH is set, you can run mongod and mongosh from any terminal, including VS Code.
+
+#Setup backend
+
+## Navigate to backend folder
+cd backend
+
+## Create virtual environment
+python -m venv venv
+venv\Scripts\activate  # Windows
+
+## Install dependencies
+pip install fastapi uvicorn motor python-dotenv pymongo
+
+## Create .env file
+echo "MONGO_URL=mongodb://localhost:27017
+DB_NAME=taskflow_manager
+CORS_ORIGINS=http://localhost:3000" > .env
+
+## Run backend
+uvicorn server:app --reload --port 8000
+
+#Setup Frontend
+
+## Navigate to Frontend folder
+cd Frontend
+
+## Install dependencies
+npm install react-day-picker@latest --save 
+
+##Create .env file
+echo "REACT_APP_BACKEND_URL=http://localhost:8000" > .env
+
+# Run frontend
+npm start
+
+#Access Your Application
+##Frontend: http://localhost:3000
+##Backend API: http://localhost:8000/api
+##API Docs: http://localhost:8000/docs
